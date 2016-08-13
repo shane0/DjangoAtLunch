@@ -5,7 +5,7 @@ You can also leave a message like "I'm tentatively out tue-wed" so others can pl
 
 It was built for internal use in some medical offices while working at Mercy Hospital Iowa City but I've found it useful anywhere.
 
-![screenshot](https://cloud.githubusercontent.com/assets/1454458/17639979/5006aea0-60ad-11e6-8aed-a49767b2beb8.PNG)
+![screenshot](https://cloud.githubusercontent.com/assets/1454458/17640339/53507c30-60b2-11e6-9f20-17f679ab3def.PNG)
 
 ## Installation
 
