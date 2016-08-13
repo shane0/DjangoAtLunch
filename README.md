@@ -9,7 +9,7 @@ It was built for internal use in some medical offices while working at Mercy Hos
 
 ## Installation
 
-- DOWNLOAD
+- download to your existing django site
 
 - add to /settings.py INSTALLED_APPS
 
