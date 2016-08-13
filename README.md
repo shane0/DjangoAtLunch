@@ -1,8 +1,23 @@
 # DjangoAtLunch
-Simple Django app to let people know you're at lunch or on vacation.
 
-To use you add users in the built in admin console.
+![screenshot](https://cloud.githubusercontent.com/assets/1454458/17639979/5006aea0-60ad-11e6-8aed-a49767b2beb8.PNG)
 
-Users have one view where they can check in or out with a timestamp and leave a text message for others.
+This is a very simple message board where you can leave a message and check in and out for things like meetings, lunch, vacation and can also be used to reserve rooms, machines, and other resources.
 
-This was developed for a few medical offices in Eastern Iowa, used internally by trusted staff.
+It was built for internal use in some medical offices while working at Mercy Hospital Iowa City but I've found it useful anywhere.
+
+## instructions
+
+Admin administers users, there is only view which is anonymous for convenience so anyone can update the page.
+
+Added google's mdl template.
+
+Features
+
+- [x] anonymous message board
+- [ ] non-anonymous mode
+- [ ] seperate views for departments
+- [ ] add some scheduling and durations using moment.js
+
+
+
