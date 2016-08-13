@@ -28,16 +28,18 @@ url(r'^board/', include('inoutboard.urls')),
 
 ## Usage
 
-Admin administers users, there is only view which is anonymous for convenience so anyone can update the page.
+Admin administers users.
 
-Added google's mdl template.
+There is one view which anyone can edit anonymously for convenience, I'll add a read only page as well.
+
+Added google's mdl template with icons.
 
 Features
 
 - [x] anonymous message board
 - [x] material design
 - [x] material design icons
-- [ ] non-anonymous mode
+- [ ] read only page
 - [ ] seperate boards for departments
 - [ ] moment.js with days until / days since
 - [ ] calendar with scheduling
