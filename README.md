@@ -35,6 +35,8 @@ Added google's mdl template.
 Features
 
 - [x] anonymous message board
+- [x] material design
+- [x] material design icons
 - [ ] non-anonymous mode
 - [ ] seperate boards for departments
 - [ ] moment.js with days until / days since
