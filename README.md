@@ -11,14 +11,17 @@ It was built for internal use in some medical offices while working at Mercy Hos
 
 - add to /settings.py INSTALLED_APPS
 
-'''python
+```python
     'inoutboard',
+    
 ```
 
 - add to /urls.py urlpatterns
 
 ```python
+
 url(r'^board/', include('inoutboard.urls')),
+
 ```
 
 ## Usage
