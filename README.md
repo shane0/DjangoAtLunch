@@ -5,7 +5,23 @@ It was built for internal use in some medical offices while working at Mercy Hos
 
 ![screenshot](https://cloud.githubusercontent.com/assets/1454458/17639979/5006aea0-60ad-11e6-8aed-a49767b2beb8.PNG)
 
-## Instructions
+## Installation
+
+- DOWNLOAD
+
+- add to /settings.py INSTALLED_APPS
+
+'''python
+    'inoutboard',
+```
+
+- add to /urls.py urlpatterns
+
+```python
+url(r'^board/', include('inoutboard.urls')),
+```
+
+## Usage
 
 Admin administers users, there is only view which is anonymous for convenience so anyone can update the page.
 
@@ -17,6 +33,3 @@ Features
 - [ ] non-anonymous mode
 - [ ] seperate views for departments
 - [ ] add some scheduling and durations using moment.js
-
-
-
