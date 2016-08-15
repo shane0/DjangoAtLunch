@@ -1,150 +1,56 @@
-<!doctype html>
-<html lang="en">
+{% extends "base.html" %}
 
-<head>
-    <title>Message Board</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta http-equiv="refresh" content="60">
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-    <!-- styles -->
-    <!-- style -->
-    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
-    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
-    <!-- <link rel="stylesheet" href="/css/mdl/material.min.css"> -->
-    <!-- <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.indigo-pink.min.css" /> -->
-    <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.green-light_green.min.css" />
-    <!-- <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.blue_grey-teal.min.css" />  -->
-    <!-- <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.brown-orange.min.css" /> -->
-    <link href="/css/prism.css" rel="stylesheet" />
-    <!-- scripts -->
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-    <script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
-    <script src="/tipr/tipr.min.js"></script>
-    <script src="/scripts/moment.js"></script>
-    <script src="/scripts/prism.js"></script>
-    <script src="/tipuesearch/tipuesearch_set.js"></script>
-    <script src="/tipuesearch/tipuesearch.min.js"></script>
-    <script>
-        moment().format();
-    </script>
-    <style>
-        table {
-            border-collapse: collapse;
-            border: 0px;
-            width: 1px;
-            white-space: nowrap;
-            /*margin: 0 auto;*/
-        }
-    </style>
-</head>
 
-<body>
-    <!-- Always shows a header, even in smaller screens. -->
-    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-        <header class="mdl-layout__header">
-            <div class="mdl-layout__header-row">
-                <!-- Title -->
-                <span class="mdl-layout-title">Message Board</span>
-                <!-- Add spacer, to align navigation to the right -->
-                <div class="mdl-layout-spacer"></div>
-                <!-- Navigation. We hide it in small screens. -->
-                <nav class="mdl-navigation mdl-layout--large-screen-only">
-                    <!-- #include file="/nav.html" -->
-                </nav>
-            </div>
-        </header>
-        <div class="mdl-layout__drawer">
-            <span class="mdl-layout-title">External Links</span>
-            <nav class="mdl-navigation">
-                <!-- #include file="/menu.html" -->
-            </nav>
-        </div>
-        <main class="mdl-layout__content">
-            <div class="page-content">
-                <!-- Your content goes here -->
-                <div class="mdl-grid">
-                    <div class="mdl-cell mdl-cell--12-col">
-                        <!-- column 1 -->
-                        {% block title %} {% endblock %} {% block content %}
+
+
+                        {% block title %}Message Board {% endblock %}
+
+                         {% block content %}
                         <center>
                             <h3>Message Board</h3>
+test
+
+                    <!-- todo: write a view to updatet this Simple MDL Progress Bar -->
+                      <div id="p1" class="mdl-progress mdl-js-progress"></div>
+                      <script>
+                          document.querySelector('#p1').addEventListener('mdl-componentupgraded', function() {
+                              this.MaterialProgress.setProgress(60);
+                          });
+                      </script>
+
                             <table class="mdl-data-table mdl-js-data-table  mdl-shadow--2dp">
                                 <thead>
                                     <tr>
-                                        <th>name</th>
-                                        <th>in</th>
-                                        <th>out</th>
-                                        <th>last update</th>
-                                        <th>message</th>
+                                        <th><span class="mdl-badge" data-badge="{{ staff | length }}">Total</span></th>
+                                        <span class="mdl-badge" data-badge="{{ in | length }}">In</span>
+                                        <span class="mdl-badge" data-badge="{{ out | length }}">Out</span>
+                                        <th>Message</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {% for s in staff %}
                                     <tr {% if s.status %} bgcolor="#B2FF59" {% else %} bgcolor="#9E9E9E " {% endif %}>
                                         <td class="mdl-data-table__cell--non-numeric">
-                                            {{ s.name }}
+                                          {% if s.status %} <i class="material-icons" style="padding-left:25px;">check</i>
+                                          {% else %} <i class="material-icons" style="padding-left:25px;">close</i> {% endif %} {{ s.name }}
                                         </td>
-                                        <td class="mdl-data-table__cell--non-numeric">
-                                            <!-- in -->
-                                            {# out s.status = True#} {% if s.status %}
-                                            <form action="" method="post">
-                                                {% csrf_token %}
-                                                <input type="hidden" name="staff_id" value="{{ s.id }}">
-                                                <input type="hidden" name="out" value=" ">
-                                                <button class="mdl-button mdl-js-button mdl-js-ripple-effect" type="submit" value="">
-                                                    <i class="material-icons">check</i></button>
-                                            </form>
-                                            {% endif %}
-                                        </td>
-                                        <td class="mdl-data-table__cell--non-numeric">
-                                            <!-- out -->
-                                            {# in #} {% if s.status %} {% else %}
-                                            <form action="" method="post">
-                                                {% csrf_token %}
-                                                <input type="hidden" name="staff_id" value="{{ s.id }}">
-                                                <input type="hidden" name="in" value=" ">
-                                                <button class="mdl-button mdl-js-button mdl-js-ripple-effect" type="submit" value="">
-                                                    <i class="material-icons">cancel</i></button>
-                                            </form>
-                                            {% endif %}
-                                        </td>
-                                        <td class="mdl-data-table__cell--non-numeric"> {{ s.last_mod|time }}
-                                            <br> {{ s.last_mod|date:"D d M Y" }}</td>
+
                                         <div class="mdl-textfield mdl-js-textfield">
                                             <td>
-                                                <form action="" method="post">
-                                                    {% csrf_token %}
-                                                    <div >
-                                                        <textarea class="mdl-textfield" name="message" value="{{ s.message }}"> {{ s.message }}
-                                                        </textarea>
-                                                    </div>
-                                                    <input type="hidden" name="staff_id" value="{{ s.id }}">
-                                                    <input class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="submit" value="update">
-                                                </form>
+
+
+
+                                              {{ s.message }}"> {{ s.message }}
+
+
+
+
                                             </td>
                                         </div>
                                     </tr>
                                     {% endfor %}
                                 </tbody>
                             </table>
-                            <br>
-                            <a href="/admin" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent">
-                            Admin Page
-                            </a>
 
                         </center>
                         {% endblock %}
-                    </div>
-                </div>
-                <!-- end content -->
-            </div>
-        </main>
-    </div>
-
-</body>
-
-</html>
