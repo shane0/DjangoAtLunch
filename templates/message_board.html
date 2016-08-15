@@ -1,56 +1,131 @@
-{% extends "base.html" %}
+{% extends "base.html" %} {% block title %}Message Board {% endblock %} {% block content %}
+<center>
+    <!-- hidden    -->
+    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" id="button" onclick="showhide()">Show instructions</button>
+    <br>
+    <div id="newpost">
+
+        <h3>Message Board</h3>
+        <p>Page will refresh every 60 seconds so type fast, if it updates while you're typing you'll lose your changes! 
+            <br>To check in or out click the in out slider left of your name.
+            <br>To update your message type in the box and click update.
+            <br>To add users click Administration (requires login)
+            <br>Anyone can edit this page, use responsibly.
+          </p>
+        <!-- hidden content -->
+
+    </div>
+
+    <script>
+        var div = document.getElementById("newpost");
+        div.style.display = "none";
+
+        function showhide() {
+            var div = document.getElementById("newpost");
+            if (div.style.display !== "none") {
+                div.style.display = "none";
+            } else {
+                div.style.display = "block";
+            }
+        }
+    </script>
+    <!-- end hidden -->
+    <!-- Number badge on icon -->
+    <!-- Number badge -->
 
 
+    <br>
+    <!-- Simple MDL Progress Bar -->
+    <div id="p1" class="mdl-progress mdl-js-progress"></div>
+    <script>
+        document.querySelector('#p1').addEventListener('mdl-componentupgraded', function() {
+            this.MaterialProgress.setProgress(60);
+        });
+    </script>
 
+    <table class="mdl-data-table mdl-js-data-table  mdl-shadow--2dp">
+        <thead>
+            <tr>
+                <th>
+                    <span class="mdl-badge" data-badge="{{ in | length }}">In</span>
 
-                        {% block title %}Message Board {% endblock %}
+                </th>
+                <th></th>
+                <th>
+                    <span class="mdl-badge" data-badge="{{ out | length }}">Out</span>
+                </th>
+                <th>
+                    Message
 
-                         {% block content %}
-                        <center>
-                            <h3>Message Board</h3>
-test
+                </th>
+                <th>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for s in staff %}
+            <tr {% if s.status %} bgcolor="#B2FF59" {% else %} bgcolor="#9E9E9E " {% endif %}>
+                <td>
+                    <!-- in -->
+                    {# out s.status = True#} {% if s.status %}
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="staff_id" value="{{ s.id }}">
+                        <input type="hidden" name="out" value=" ">
+                        <button class="mdl-button mdl-js-button mdl-js-ripple-effect" type="submit" value="">
+                            <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="switch-1">
+                                <input type="checkbox" id="switch-1" class="mdl-switch__input" checked>
+                                <span class="mdl-switch__label"></span>
+                            </label>
+                    </form>
+                    {% endif %}
+                    <!-- out -->
+                    {# in #} {% if s.status %} {% else %}
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="staff_id" value="{{ s.id }}">
+                        <input type="hidden" name="in" value=" ">
+                        <button class="mdl-button mdl-js-button mdl-js-ripple-effect" type="submit" value="">
+                            <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="switch-2">
+                                <input type="checkbox" id="switch-2" class="mdl-switch__input">
+                                <span class="mdl-switch__label"></span>
+                            </label>
+                    </form>
+                    {% endif %}
 
-                    <!-- todo: write a view to updatet this Simple MDL Progress Bar -->
-                      <div id="p1" class="mdl-progress mdl-js-progress"></div>
-                      <script>
-                          document.querySelector('#p1').addEventListener('mdl-componentupgraded', function() {
-                              this.MaterialProgress.setProgress(60);
-                          });
-                      </script>
+                </td>
+                <td class="mdl-data-table__cell--non-numeric">
+                    {{ s.name }}
+                </td>
+                <td class="mdl-data-table__cell--non-numeric">
+                    {% if s.status %} <i class="material-icons" style="padding-left:25px;">check</i> {% else %} <i class="material-icons" style="padding-left:25px;">close</i> {% endif %}
+                </td>
+                <div class="mdl-textfield mdl-js-textfield">
+                    <td>
+                        <form action="" method="post">
+                            {% csrf_token %}
+                            <div>
+                                <style>
+                                    .textarea {
+                                        -webkit-box-sizing: border-box;
+                                        -moz-box-sizing: border-box;
+                                        box-sizing: border-box;
+                                    }
+                                </style>
+                                <textarea style="resize: none;overflow: auto;" class="mdl-textfield" name="message" value="{{ s.message }}"> {{ s.message }}
+                                </textarea>
+                            </div>
+                            <th>
+                                <input class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" type="submit" value="update">
+                                <input type="hidden" name="staff_id" value="{{ s.id }}">
+                            </th>
+                        </form>
+                    </td>
+                </div>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 
-                            <table class="mdl-data-table mdl-js-data-table  mdl-shadow--2dp">
-                                <thead>
-                                    <tr>
-                                        <th><span class="mdl-badge" data-badge="{{ staff | length }}">Total</span></th>
-                                        <span class="mdl-badge" data-badge="{{ in | length }}">In</span>
-                                        <span class="mdl-badge" data-badge="{{ out | length }}">Out</span>
-                                        <th>Message</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {% for s in staff %}
-                                    <tr {% if s.status %} bgcolor="#B2FF59" {% else %} bgcolor="#9E9E9E " {% endif %}>
-                                        <td class="mdl-data-table__cell--non-numeric">
-                                          {% if s.status %} <i class="material-icons" style="padding-left:25px;">check</i>
-                                          {% else %} <i class="material-icons" style="padding-left:25px;">close</i> {% endif %} {{ s.name }}
-                                        </td>
-
-                                        <div class="mdl-textfield mdl-js-textfield">
-                                            <td>
-
-
-
-                                              {{ s.message }}"> {{ s.message }}
-
-
-
-
-                                            </td>
-                                        </div>
-                                    </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>
-
-                        </center>
-                        {% endblock %}
+</center>
+{% endblock %}
